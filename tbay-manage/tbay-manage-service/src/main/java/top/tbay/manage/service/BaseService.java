@@ -5,6 +5,7 @@ import com.github.abel533.mapper.Mapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
+import top.tbay.manage.pojo.BasePojo;
 
 import java.util.Date;
 import java.util.List;
