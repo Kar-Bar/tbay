@@ -8,12 +8,12 @@
             <th data-options="field:'title',width:200">商品标题</th>
             <th data-options="field:'cid',width:100">叶子类目</th>
             <th data-options="field:'sellPoint',width:100">卖点</th>
-            <th data-options="field:'price',width:70,align:'right',formatter:TAOTAO.formatPrice">价格</th>
+            <th data-options="field:'price',width:70,align:'right',formatter:TBAY.formatPrice">价格</th>
             <th data-options="field:'num',width:70,align:'right'">库存数量</th>
             <th data-options="field:'barcode',width:100">条形码</th>
-            <th data-options="field:'status',width:60,align:'center',formatter:TAOTAO.formatItemStatus">状态</th>
-            <th data-options="field:'created',width:130,align:'center',formatter:TAOTAO.formatDateTime">创建日期</th>
-            <th data-options="field:'updated',width:130,align:'center',formatter:TAOTAO.formatDateTime">更新日期</th>
+            <th data-options="field:'status',width:60,align:'center',formatter:TBAY.formatItemStatus">状态</th>
+            <th data-options="field:'created',width:130,align:'center',formatter:TBAY.formatDateTime">创建日期</th>
+            <th data-options="field:'updated',width:130,align:'center',formatter:TBAY.formatDateTime">更新日期</th>
         </tr>
     </thead>
 </table>
@@ -56,7 +56,13 @@
         		onLoad :function(){
         			//回显数据
         			var data = $("#itemList").datagrid("getSelections")[0];
-        			data.priceView = TAOTAO.formatPrice(data.price);
+
+        			//---------------
+//                    data.parent().find("[name=cid]").val(node.id);
+//                    data.next().text(node.text).attr("cid",node.id);
+                    //---------------
+
+        			data.priceView = TBAY.formatPrice(data.price);
         			$("#itemeEditForm").form("load",data);
         			
         			// 加载商品描述
@@ -65,11 +71,11 @@
         			});
         			
         			//加载商品规格
-        			$.getJSON('/rest/item/param/item/query/'+data.id,function(_data){
+        			$.getJSON('/rest/item/param/query/'+data.id,function(_data){
         				if(_data && _data.status == 200 && _data.data && _data.data.paramData){
         					$("#itemeEditForm .params").show();
         					$("#itemeEditForm [name=itemParams]").val(_data.data.paramData);
-        					$("#itemeEditForm [name=itemParamId]").val(_data.data.id);
+                            $("#itemeEditForm [name=itemParamId]").val(_data.data.id);
         					
         					//回显商品规格
         					 var paramData = JSON.parse(_data.data.paramData);
@@ -91,12 +97,12 @@
         					 $("#itemeEditForm .params td").eq(1).html(html);
         				}
         			});
-        			
-        			TAOTAO.init({
+
+                    TBAY.init({
         				"pics" : data.image,
         				"cid" : data.cid,
         				fun:function(node){
-        					TAOTAO.changeItemParam(node, "itemeEditForm");
+                            TBAY.changeItemParam(node, "itemeEditForm");
         				}
         			});
         		}
@@ -114,13 +120,18 @@
         	$.messager.confirm('确认','确定删除ID为 '+ids+' 的商品吗？',function(r){
         	    if (r){
         	    	var params = {"ids":ids};
-                	$.post("/rest/item/delete",params, function(data){
-            			if(data.status == 200){
-            				$.messager.alert('提示','删除商品成功!',undefined,function(){
-            					$("#itemList").datagrid("reload");
-            				});
-            			}
-            		});
+                    $.ajax({
+                        type: "POST",
+                        url: "/rest/item/delete",
+                        data: params,
+                        success: function(){
+                            $.messager.alert('提示','删除商品成功!');
+                            $("#itemList").datagrid("reload");
+                        },
+                        error: function(){
+                            $.messager.alert('提示','删除商品失败!');
+                        }
+                    });
         	    }
         	});
         }

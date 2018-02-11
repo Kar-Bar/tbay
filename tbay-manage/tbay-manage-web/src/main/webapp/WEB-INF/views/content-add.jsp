@@ -12,16 +12,16 @@
 	        </tr>
 	        <tr>
 	            <td>内容子标题:</td>
-	            <td><input class="easyui-textbox" type="text" name="subTitle" style="width: 280px;"></input></td>
+	            <td><input class="easyui-textbox" type="text" name="subTitle" style="width: 280px;"/></td>
 	        </tr>
 	        <tr>
 	            <td>内容描述:</td>
-	            <td><input class="easyui-textbox" name="titleDesc" data-options="multiline:true,validType:'length[0,150]'" style="height:60px;width: 280px;"></input>
+	            <td><input class="easyui-textbox" name="titleDesc" data-options="multiline:true,validType:'length[0,150]'" style="height:60px;width: 280px;"/>
 	            </td>
 	        </tr>
 	         <tr>
 	            <td>URL:</td>
-	            <td><input class="easyui-textbox" type="text" name="url" style="width: 280px;"></input></td>
+	            <td><input class="easyui-textbox" type="text" name="url" style="width: 280px;"/></td>
 	        </tr>
 	        <tr>
 	            <td>图片:</td>
@@ -82,7 +82,7 @@
 				   success: function(msg){
 					   $.messager.alert('提示','新增内容成功!');
    						$("#contentList").datagrid("reload");
-   						TT.closeCurrentWindow();
+   						TB.closeCurrentWindow();
 				   },
 				   error: function(){
 					   $.messager.alert('提示','新增内容失败!');

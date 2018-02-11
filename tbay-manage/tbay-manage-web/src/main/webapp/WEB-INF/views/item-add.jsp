@@ -66,9 +66,9 @@
 <script type="text/javascript">
 	var itemAddEditor ;
 	$(function(){
-		itemAddEditor = TAOTAO.createEditor("#itemAddForm [name=desc]");
-		TAOTAO.init({fun:function(node){
-			TAOTAO.changeItemParam(node, "itemAddForm");
+		itemAddEditor = TBAY.createEditor("#itemAddForm [name=desc]");
+        TBAY.init({fun:function(node){
+            TBAY.changeItemParam(node, "itemAddForm");
 		}});
 	});
 	
@@ -77,7 +77,7 @@
 			$.messager.alert('提示','表单还未填写完成!');
 			return ;
 		}
-		//处理商品的价格的单位，将元转化为分
+		//处理商品的价格的单位，将元转化为元
 		$("#itemAddForm [name=price]").val(eval($("#itemAddForm [name=priceView]").val()) * 100);
 		//将编辑器中的内容同步到隐藏多行文本中
 		itemAddEditor.sync();

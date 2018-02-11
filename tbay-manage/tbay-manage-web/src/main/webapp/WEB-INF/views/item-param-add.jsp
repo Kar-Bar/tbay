@@ -1,10 +1,9 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <table cellpadding="5" style="margin-left: 30px" id="itemParamAddTable" class="itemParam">
 	<tr>
 		<td>商品类目:</td>
 		<td><a href="javascript:void(0)" class="easyui-linkbutton selectItemCat">选择类目</a> 
-			<input type="hidden" name="cid" style="width: 280px;"></input>
+			<input type="hidden" name="cid" style="width: 280px;"/>
 		</td>
 	</tr>
 	<tr class="hide addGroupTr">
@@ -37,10 +36,10 @@
 </div>
 <script style="text/javascript">
 	$(function(){
-		TAOTAO.initItemCat({
+		TBAY.initItemCat({
 			fun:function(node){
 			$(".addGroupTr").hide().find(".param").remove();
-				//  判断选择的目录是否已经添加过规格
+			<%--	//  判断选择的目录是否已经添加过规格
 			  /* $.getJSON("/rest/item/param/" + node.id,function(data){
 				  if(data){
 					  $.messager.alert("提示", "该类目已经添加，请选择其他类目。", undefined, function(){
@@ -49,23 +48,24 @@
 					  return ;
 				  }
 				  $(".addGroupTr").show();
-			  }); */
-				
-			  $.ajax({
-				   type: "GET",
-				   url: "/rest/item/param/" + node.id,
-				   success: function(data){
-					   if(data){
-						  $.messager.alert("提示", "该类目已经添加，请选择其他类目。", undefined, function(){
-							 $("#itemParamAddTable .selectItemCat").click();
-						  });
-						  return ;
-					  }
-					  $(".addGroupTr").show();
-				   },
-				   error: function(){
-					   alert("error");
-				   }
+			  }); */--%>
+
+		$.ajax({
+			type: "GET",
+			url: "/rest/item/param/check/" + node.id,
+			statusCode : {
+					404 : function(){
+						$(".addGroupTr").show();
+					},
+					200 : function(){
+						$.messager.alert("提示", "该类目已经添加，请选择其他类目。", undefined, function(){
+						$("#itemParamAddTable .selectItemCat").click();
+					});
+				},
+					500 : function(){
+						alert("error");
+					}
+					}
 				});
 			}
 		});
@@ -109,7 +109,7 @@
 					});					
 				}
 			});
-			var url = "/rest/item/param/"+$("#itemParamAddTable [name=cid]").val();
+			var url = "/rest/item/param/add/"+$("#itemParamAddTable [name=cid]").val();
 			$.post(url,{"paramData":JSON.stringify(params)},function(data){
 				$.messager.alert('提示','新增商品规格成功!',undefined,function(){
 					$(".panel-tool-close").click();

@@ -17,7 +17,7 @@ public class ItemCatService extends BaseService<ItemCat>{
     @Autowired
     private ItemCatMapper itemCatMapper;
 
-    public List<ItemCat> queryItemCategroyList(ItemCat record) {
-        return itemCatMapper.select(record);
-    }
+//    public List<ItemCat> queryItemCategroyList(ItemCat record) {
+//        return itemCatMapper.select(record);
+//    }
 }

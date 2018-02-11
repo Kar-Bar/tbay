@@ -6,6 +6,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import top.tbay.manage.pojo.BasePojo;
+import top.tbay.manage.pojo.Item;
 
 import java.util.Date;
 import java.util.List;
@@ -149,7 +150,6 @@ public abstract class BaseService <T extends BasePojo>{
     public Integer deleteByWhere(T record){
         return this.mapper.delete(record);
     }
-
 
 }
 
